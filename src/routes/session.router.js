@@ -20,7 +20,7 @@ router.post('/login', async(req, res) => {
         name: `${user.first_name} ${user.last_name}`,
         email: user.email
     }
-    res.sendStatus(200);
+    res.send({status:"success"});
 })
 
 export default router;
