@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { privacy } from "../middlewares/auth.js";
 // import ProductManager from "../dao/fileSystem/Managers/productManager.js";
 import ProductManager from "../dao/mongo/Managers/productManager.js";
 import CartManager from "../dao/mongo/Managers/cartManager.js";
@@ -7,6 +8,20 @@ import productModel from "../dao/mongo/models/product.js";
 const router = Router();
 const productManager = new ProductManager();
 const cartManager = new CartManager();
+
+router.get('/register', privacy('NO_AUTHENTICATED'), (req, res) => {
+    res.render('register');
+});
+
+router.get('/login', privacy('NO_AUTHENTICATED'), (req, res) => {
+    res.render('login');
+});
+
+router.get('/profile', privacy('PRIVATE'), (req, res) => {
+    res.render('profile',{
+        user: req.session.user
+    })
+});
 
 router.get('/products', async (req,res)=>{
     try {
@@ -48,20 +63,6 @@ router.get('/carts/:cid', async (req,res)=>{
     const carts = await cartManager.getCarts();
     const cartSelected = carts.find((cart) => cart._id == cid);
     res.render('cart',{cartSelected})
-});
-
-router.get('/register', (req, res) => {
-    res.render('register');
-});
-
-router.get('/login', (req, res) => {
-    res.render('login');
-});
-
-router.get('/profile', (req, res) => {
-    res.render('profile',{
-        user: req.session.user
-    })
 });
 
 router.get('/chat', async (req,res)=>{
