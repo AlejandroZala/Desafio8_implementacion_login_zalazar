@@ -10,7 +10,7 @@ router.post('/register', async(req, res) => {
 
 router.post('/login', async(req, res) => {
     const {email, password} = req.body;
-    if(email==="admin@admin.com"&&password==="123"){
+    if(email==="adminCoder@coder.com"&&password==="adminCod3r123"){
         //Desde aquí ya puedo inicializar el Admin
         req.session.user = {
             name: `Admin`,
@@ -29,6 +29,19 @@ router.post('/login', async(req, res) => {
         email: user.email
     }
     res.send({status:"success"});
-})
+});
+
+router.post("/logout", (req, res) => {
+    // Destruye la sesión
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error al destruir la sesión:", err);
+            return res
+            .status(500)
+            .send({ status: "error", error: "Error al cerrar sesión" });
+        }
+        res.send({ status: "success", message: "Sesión cerrada correctamente" });
+    });
+});
 
 export default router;

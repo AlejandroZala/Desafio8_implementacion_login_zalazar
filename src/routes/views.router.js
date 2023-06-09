@@ -23,7 +23,7 @@ router.get('/profile', privacy('PRIVATE'), (req, res) => {
     })
 });
 
-router.get('/products', async (req,res)=>{
+router.get('/', async (req,res)=>{
     try {
         const { page = 1, sort = 1, limit = 3 } = req.query;
         const options = {

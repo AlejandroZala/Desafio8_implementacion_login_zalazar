@@ -24,7 +24,7 @@ form.addEventListener('submit', async event=>{
             title: `Logueado`,
             icon: "success",
           });
-          window.location.replace("/products");
+          window.location.replace("/");
         } else {
           Swal.fire({
             toast: true,
